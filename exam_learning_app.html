@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Exam Learning Hub — UP Police 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080a0e;
+  --bg2: #0e1117;
+  --bg3: #141820;
+  --bg4: #1c2230;
+  --border: #232b3a;
+  --border2: #2e3a4e;
+  --text: #b8c2d4;
+  --text-dim: #556070;
+  --text-bright: #e8edf5;
+  --cyan: #00d4ff;
+  --cyan-dim: rgba(0,212,255,0.12);
+  --amber: #f5a623;
+  --amber-dim: rgba(245,166,35,0.12);
+  --green: #3ddc84;
+  --green-dim: rgba(61,220,132,0.12);
+  --red: #ff5252;
+  --red-dim: rgba(255,82,82,0.12);
+  --gold: #ffd700;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--text);font-family:'Barlow Condensed',sans-serif;display:flex;flex-direction:column}
+
+/* ── HEADER ── */
+.app-header{
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  padding:10px 16px;display:flex;align-items:center;justify-content:space-between;
+  flex-shrink:0;
+}
+.app-logo{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--cyan);letter-spacing:2px}
+.app-logo span{color:var(--text-dim);font-size:12px;display:block;font-family:'JetBrains Mono',monospace;letter-spacing:1px;margin-top:-4px}
+.header-score{text-align:right}
+.score-num{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:var(--gold)}
+.score-label{font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase}
+
+/* ── MAIN CONTENT ── */
+.main-content{flex:1;overflow-y:auto;overflow-x:hidden;position:relative}
+.main-content::-webkit-scrollbar{width:3px}
+.main-content::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+
+/* ── BOTTOM NAV ── */
+.bottom-nav{
+  display:flex;background:var(--bg2);border-top:1px solid var(--border);
+  flex-shrink:0;
+}
+.nav-btn{
+  flex:1;padding:10px 4px 8px;display:flex;flex-direction:column;align-items:center;
+  gap:3px;cursor:pointer;border:none;background:transparent;color:var(--text-dim);
+  font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:1px;
+  text-transform:uppercase;transition:all 0.2s;position:relative;
+}
+.nav-btn.active{color:var(--cyan)}
+.nav-btn.active::after{
+  content:'';position:absolute;top:0;left:20%;right:20%;height:2px;
+  background:var(--cyan);border-radius:0 0 3px 3px;
+}
+.nav-btn.amber.active{color:var(--amber)}
+.nav-btn.amber.active::after{background:var(--amber)}
+.nav-btn.green.active{color:var(--green)}
+.nav-btn.green.active::after{background:var(--green)}
+.nav-icon{font-size:20px;line-height:1}
+
+/* ── SECTION ── */
+.section{display:none;padding:0 0 16px}
+.section.active{display:block}
+
+/* ── SUB NAV (tabs inside section) ── */
+.sub-nav{
+  display:flex;background:var(--bg3);border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:10;
+}
+.sub-btn{
+  flex:1;padding:10px 6px;text-align:center;cursor:pointer;font-size:13px;
+  font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  border:none;background:transparent;color:var(--text-dim);
+  transition:all 0.2s;border-bottom:2px solid transparent;
+  font-family:'Barlow Condensed',sans-serif;
+}
+.sub-btn.active{color:var(--cyan);border-bottom-color:var(--cyan)}
+.sub-btn.amber.active{color:var(--amber);border-bottom-color:var(--amber)}
+.sub-btn.green.active{color:var(--green);border-bottom-color:var(--green)}
+
+.sub-section{display:none;padding:16px}
+.sub-section.active{display:block}
+
+/* ── SECTION HEADER ── */
+.sec-title{
+  font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--text-bright);
+  letter-spacing:3px;margin-bottom:4px;
+}
+.sec-subtitle{font-size:13px;color:var(--text-dim);margin-bottom:16px;letter-spacing:0.5px}
+
+/* ── ALPHABET TABLE ── */
+.alpha-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px;
+}
+.alpha-cell{
+  background:var(--bg3);border:1px solid var(--border);border-radius:8px;
+  padding:8px 4px;text-align:center;transition:all 0.2s;cursor:default;
+  position:relative;
+}
+.alpha-cell:hover{border-color:var(--cyan);background:var(--cyan-dim)}
+.alpha-letter{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--cyan);line-height:1}
+.alpha-pos{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--amber);font-weight:700}
+.alpha-opp{font-size:10px;color:var(--text-dim)}
+.alpha-rev{font-size:10px;color:var(--green)}
+
+.info-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.info-card{
+  background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:12px;
+}
+.info-card-title{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px;font-weight:700}
+.info-card-content{font-size:13px;color:var(--text-bright);line-height:1.8}
+.cyan{color:var(--cyan)}
+.amber{color:var(--amber)!important}
+.green{color:var(--green)!important}
+.red-c{color:var(--red)!important}
+
+/* EJOTY card special */
+.ejoty-row{display:flex;gap:6px;flex-wrap:wrap}
+.ejoty-chip{
+  background:var(--cyan-dim);border:1px solid rgba(0,212,255,0.3);
+  border-radius:6px;padding:4px 8px;
+  font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--cyan);font-weight:700;
+}
+
+/* ── FLASHCARD ── */
+.flashcard-wrap{display:flex;flex-direction:column;align-items:center;gap:16px}
+.flashcard{
+  width:100%;max-width:360px;aspect-ratio:3/2;
+  background:var(--bg3);border:2px solid var(--border2);border-radius:16px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  cursor:pointer;transition:all 0.3s;position:relative;overflow:hidden;
+  user-select:none;
+}
+.flashcard::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 30% 30%, rgba(0,212,255,0.04), transparent 60%);
+}
+.flashcard:active{transform:scale(0.97)}
+.card-question{font-family:'Bebas Neue',sans-serif;font-size:48px;color:var(--text-bright);letter-spacing:4px;text-align:center;line-height:1;padding:0 16px}
+.card-hint{font-size:13px;color:var(--text-dim);margin-top:8px;letter-spacing:1px}
+.card-answer{
+  font-family:'JetBrains Mono',monospace;font-size:36px;color:var(--cyan);font-weight:700;
+  text-align:center;display:none;padding:0 12px;
+}
+.card-answer.show{display:block;animation:popIn 0.3s cubic-bezier(0.34,1.56,0.64,1)}
+@keyframes popIn{from{transform:scale(0.5);opacity:0}to{transform:scale(1);opacity:1}}
+.card-tap-hint{
+  position:absolute;bottom:10px;font-size:11px;color:var(--text-dim);letter-spacing:1px;
+}
+
+.fc-controls{display:flex;gap:10px;width:100%;max-width:360px}
+.fc-btn{
+  flex:1;padding:12px;border:1px solid var(--border2);border-radius:10px;
+  background:var(--bg3);color:var(--text);font-family:'Barlow Condensed',sans-serif;
+  font-size:15px;font-weight:700;letter-spacing:1px;cursor:pointer;transition:all 0.2s;
+}
+.fc-btn:hover{transform:translateY(-2px)}
+.fc-btn.know{border-color:var(--green);color:var(--green)}
+.fc-btn.know:hover{background:var(--green-dim)}
+.fc-btn.unsure{border-color:var(--red);color:var(--red)}
+.fc-btn.unsure:hover{background:var(--red-dim)}
+
+.fc-type-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:8px}
+.fc-type-btn{
+  padding:6px 12px;border-radius:20px;border:1px solid var(--border2);
+  background:transparent;color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;
+  font-size:12px;font-weight:700;letter-spacing:1px;cursor:pointer;transition:all 0.2s;
+  text-transform:uppercase;
+}
+.fc-type-btn.active{background:var(--cyan-dim);border-color:var(--cyan);color:var(--cyan)}
+
+.fc-progress{
+  width:100%;max-width:360px;display:flex;align-items:center;gap:10px;
+  font-size:12px;color:var(--text-dim);font-family:'JetBrains Mono',monospace;
+}
+.fc-bar{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden}
+.fc-bar-fill{height:100%;background:var(--cyan);border-radius:2px;transition:width 0.4s}
+
+/* ── GAME ── */
+.game-mode-select{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:4px}
+.mode-card{
+  background:var(--bg3);border:1px solid var(--border);border-radius:12px;
+  padding:16px 20px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:16px;
+}
+.mode-card:hover{transform:translateX(4px)}
+.mode-card.easy{border-left:3px solid var(--green)}
+.mode-card.easy:hover{background:var(--green-dim);border-color:var(--green)}
+.mode-card.medium{border-left:3px solid var(--amber)}
+.mode-card.medium:hover{background:var(--amber-dim);border-color:var(--amber)}
+.mode-card.hard{border-left:3px solid var(--red)}
+.mode-card.hard:hover{background:var(--red-dim);border-color:var(--red)}
+.mode-icon{font-size:28px;flex-shrink:0}
+.mode-name{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--text-bright);letter-spacing:2px}
+.mode-desc{font-size:12px;color:var(--text-dim);margin-top:2px}
+.mode-badge{
+  margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px;
+  padding:4px 8px;border-radius:4px;font-weight:700;
+}
+.mode-badge.easy{background:var(--green-dim);color:var(--green)}
+.mode-badge.medium{background:var(--amber-dim);color:var(--amber)}
+.mode-badge.hard{background:var(--red-dim);color:var(--red)}
+
+/* GAME PLAY */
+.game-area{display:none}
+.game-area.active{display:block}
+.game-select{display:block}
+.game-select.hidden{display:none}
+
+.game-hud{
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--bg3);border:1px solid var(--border);border-radius:10px;
+  padding:10px 16px;margin-bottom:16px;
+}
+.hud-item{text-align:center}
+.hud-val{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:var(--text-bright)}
+.hud-label{font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase}
+
+.timer-bar{
+  height:6px;background:var(--border);border-radius:3px;margin-bottom:16px;overflow:hidden;
+}
+.timer-fill{
+  height:100%;background:var(--cyan);border-radius:3px;
+  transition:width 0.1s linear,background 0.3s;
+}
+.timer-fill.warn{background:var(--amber)}
+.timer-fill.danger{background:var(--red)}
+
+.question-card{
+  background:var(--bg3);border:1px solid var(--border2);border-radius:14px;
+  padding:20px;margin-bottom:16px;text-align:center;
+}
+.q-type-badge{
+  display:inline-block;font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  padding:3px 10px;border-radius:20px;margin-bottom:12px;font-weight:700;
+}
+.q-type-badge.pos{background:var(--cyan-dim);color:var(--cyan)}
+.q-type-badge.opp{background:var(--amber-dim);color:var(--amber)}
+.q-type-badge.rev{background:var(--green-dim);color:var(--green)}
+.q-type-badge.mix{background:var(--red-dim);color:var(--red)}
+
+.question-text{
+  font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--text-bright);
+  letter-spacing:3px;line-height:1.2;margin-bottom:6px;
+}
+.question-sub{font-size:13px;color:var(--text-dim);letter-spacing:0.5px}
+
+.options-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.option-btn{
+  padding:14px 8px;border:2px solid var(--border2);border-radius:10px;
+  background:var(--bg3);color:var(--text-bright);cursor:pointer;transition:all 0.15s;
+  font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;
+  text-align:center;
+}
+.option-btn:hover:not(:disabled){
+  border-color:var(--cyan);background:var(--cyan-dim);transform:translateY(-2px);
+}
+.option-btn.correct{border-color:var(--green)!important;background:var(--green-dim)!important;color:var(--green)!important}
+.option-btn.wrong{border-color:var(--red)!important;background:var(--red-dim)!important;color:var(--red)!important}
+.option-btn:disabled{cursor:default}
+
+.streak-bar{
+  display:flex;gap:4px;justify-content:center;margin-bottom:12px;
+}
+.streak-dot{
+  width:10px;height:10px;border-radius:50%;background:var(--border);
+  transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+.streak-dot.lit{background:var(--gold);box-shadow:0 0 8px var(--gold)}
+
+/* RESULT */
+.game-result{
+  display:none;text-align:center;padding:24px 16px;
+  background:var(--bg3);border:1px solid var(--border2);border-radius:16px;
+  margin-bottom:16px;
+}
+.game-result.show{display:block;animation:popIn 0.4s cubic-bezier(0.34,1.56,0.64,1)}
+.result-emoji{font-size:60px;margin-bottom:12px}
+.result-title{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:3px;color:var(--text-bright);margin-bottom:4px}
+.result-score{font-family:'JetBrains Mono',monospace;font-size:22px;color:var(--gold);margin-bottom:16px}
+.result-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+.rs-item{background:var(--bg4);border-radius:8px;padding:10px;text-align:center}
+.rs-val{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--text-bright)}
+.rs-label{font-size:11px;color:var(--text-dim);margin-top:2px;letter-spacing:0.5px}
+
+.play-again-btn{
+  width:100%;padding:14px;background:linear-gradient(135deg,var(--cyan),#0099bb);
+  border:none;border-radius:10px;color:#000;font-family:'Bebas Neue',sans-serif;
+  font-size:20px;letter-spacing:3px;cursor:pointer;transition:all 0.2s;
+}
+.play-again-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,212,255,0.3)}
+.back-btn{
+  width:100%;padding:10px;background:transparent;border:1px solid var(--border2);
+  border-radius:10px;color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;
+  font-size:15px;letter-spacing:1px;cursor:pointer;margin-top:8px;transition:all 0.2s;
+}
+.back-btn:hover{border-color:var(--text-dim);color:var(--text)}
+
+/* ── FRACTION TABLE ── */
+.frac-categories{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.frac-cat-btn{
+  padding:5px 12px;border-radius:20px;border:1px solid var(--border2);
+  background:transparent;color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;
+  font-size:12px;font-weight:700;letter-spacing:1px;cursor:pointer;transition:all 0.2s;
+  text-transform:uppercase;
+}
+.frac-cat-btn.active{background:var(--amber-dim);border-color:var(--amber);color:var(--amber)}
+
+.frac-table{width:100%;border-collapse:separate;border-spacing:0 4px;margin-bottom:8px}
+.frac-table th{
+  font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);
+  padding:6px 10px;text-align:left;font-weight:700;
+}
+.frac-table td{
+  background:var(--bg3);padding:10px 12px;font-size:15px;
+  transition:background 0.2s;
+}
+.frac-table tr td:first-child{border-radius:8px 0 0 8px}
+.frac-table tr td:last-child{border-radius:0 8px 8px 0}
+.frac-table tr:hover td{background:var(--bg4)}
+.frac-num{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;color:var(--amber)}
+.frac-pct{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;color:var(--green)}
+.frac-dec{font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--text-dim)}
+.frac-trick{font-size:12px;color:var(--text-dim);max-width:140px}
+
+/* FRACTION QUIZ */
+.frac-quiz-card{
+  background:var(--bg3);border:1px solid var(--border2);border-radius:16px;
+  padding:24px 16px;text-align:center;margin-bottom:16px;
+}
+.fq-q{font-family:'Bebas Neue',sans-serif;font-size:48px;color:var(--amber);letter-spacing:4px;margin-bottom:8px}
+.fq-sub{font-size:14px;color:var(--text-dim);letter-spacing:0.5px;margin-bottom:4px}
+
+/* ── HINDI NOTES ── */
+.notes-add-form{
+  background:var(--bg3);border:1px solid var(--border);border-radius:12px;
+  padding:16px;margin-bottom:16px;
+}
+.form-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);font-weight:700;margin-bottom:6px;display:block}
+.form-input{
+  width:100%;background:var(--bg4);border:1px solid var(--border2);border-radius:8px;
+  padding:10px 12px;color:var(--text-bright);font-family:'Barlow Condensed',sans-serif;
+  font-size:15px;outline:none;transition:border-color 0.2s;margin-bottom:10px;
+}
+.form-input:focus{border-color:var(--green)}
+.form-input::placeholder{color:var(--text-dim)}
+.form-textarea{
+  width:100%;background:var(--bg4);border:1px solid var(--border2);border-radius:8px;
+  padding:10px 12px;color:var(--text-bright);font-family:'Noto Sans Devanagari','Barlow Condensed',sans-serif;
+  font-size:14px;outline:none;transition:border-color 0.2s;resize:none;height:100px;
+  line-height:1.6;
+}
+.form-textarea:focus{border-color:var(--green)}
+.form-textarea::placeholder{color:var(--text-dim)}
+.add-note-btn{
+  width:100%;padding:11px;background:linear-gradient(135deg,var(--green),#2aaa60);
+  border:none;border-radius:8px;color:#000;font-family:'Bebas Neue',sans-serif;
+  font-size:18px;letter-spacing:2px;cursor:pointer;transition:all 0.2s;
+}
+.add-note-btn:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(61,220,132,0.25)}
+
+.notes-filter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.notes-filter-btn{
+  padding:5px 12px;border-radius:20px;border:1px solid var(--border2);
+  background:transparent;color:var(--text-dim);font-size:12px;font-weight:700;
+  letter-spacing:0.5px;cursor:pointer;transition:all 0.2s;
+  font-family:'Barlow Condensed',sans-serif;
+}
+.notes-filter-btn.active{background:var(--green-dim);border-color:var(--green);color:var(--green)}
+
+.notes-list{display:flex;flex-direction:column;gap:10px}
+.note-card{
+  background:var(--bg3);border:1px solid var(--border);border-radius:12px;
+  overflow:hidden;transition:border-color 0.2s;
+}
+.note-card:hover{border-color:var(--border2)}
+.note-header{
+  padding:12px 14px;display:flex;align-items:center;justify-content:space-between;
+  cursor:pointer;background:var(--bg3);
+}
+.note-topic{
+  font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--text-bright);
+  letter-spacing:1.5px;display:flex;align-items:center;gap:8px;
+}
+.topic-badge{
+  font-size:10px;padding:2px 7px;border-radius:10px;letter-spacing:1px;
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;
+  background:var(--green-dim);color:var(--green);border:1px solid rgba(61,220,132,0.3);
+}
+.note-meta{font-size:10px;color:var(--text-dim);letter-spacing:0.5px;margin-top:2px}
+.note-actions{display:flex;gap:6px}
+.note-del{
+  background:transparent;border:1px solid transparent;border-radius:6px;
+  color:var(--text-dim);font-size:14px;cursor:pointer;padding:4px 7px;transition:all 0.2s;
+}
+.note-del:hover{border-color:var(--red);color:var(--red);background:var(--red-dim)}
+.note-body{
+  padding:0 14px 14px;font-family:'Noto Sans Devanagari','Barlow Condensed',sans-serif;
+  font-size:14px;color:var(--text);line-height:1.7;display:none;white-space:pre-wrap;
+  border-top:1px solid var(--border);margin-top:0;padding-top:12px;
+}
+.note-body.open{display:block;animation:fadeIn 0.2s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.note-chevron{transition:transform 0.2s;color:var(--text-dim);font-size:12px}
+.note-chevron.open{transform:rotate(90deg)}
+
+.empty-notes{
+  text-align:center;padding:40px 16px;color:var(--text-dim);
+}
+.empty-notes .e-icon{font-size:40px;margin-bottom:10px}
+.empty-notes p{font-size:14px;letter-spacing:0.5px}
+
+/* TOAST */
+.toast{
+  position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--bg3);border:1px solid var(--border2);border-radius:10px;
+  padding:10px 20px;color:var(--text-bright);font-size:14px;font-weight:600;
+  z-index:999;opacity:0;transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  white-space:nowrap;letter-spacing:0.5px;pointer-events:none;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* CORRECT/WRONG FLASH */
+.flash-overlay{
+  position:fixed;inset:0;z-index:500;pointer-events:none;opacity:0;
+  transition:opacity 0.15s;
+}
+.flash-overlay.correct{background:rgba(61,220,132,0.12)}
+.flash-overlay.wrong{background:rgba(255,82,82,0.12)}
+.flash-overlay.show{opacity:1}
+
+/* ── RESPONSIVE ── */
+@media(min-width:480px){
+  .alpha-grid{grid-template-columns:repeat(6,1fr)}
+  .options-grid{grid-template-columns:repeat(2,1fr)}
+  .game-mode-select{grid-template-columns:1fr}
+}
+@media(min-width:700px){
+  .alpha-grid{grid-template-columns:repeat(7,1fr)}
+}
+
+/* ANIMATIONS */
+@keyframes slideUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.sub-section.active{animation:slideUp 0.2s ease}
+
+/* Fraction flashcard */
+.frac-card{
+  background:var(--bg3);border:2px solid var(--border2);border-radius:16px;
+  padding:32px 20px;text-align:center;cursor:pointer;transition:all 0.2s;
+  min-height:160px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:8px;user-select:none;margin-bottom:16px;
+}
+.frac-card:active{transform:scale(0.97)}
+.frac-card .q{font-family:'Bebas Neue',sans-serif;font-size:56px;color:var(--amber);letter-spacing:4px;line-height:1}
+.frac-card .hint{font-size:13px;color:var(--text-dim);letter-spacing:1px}
+.frac-card .ans{font-family:'JetBrains Mono',monospace;font-size:36px;color:var(--green);font-weight:700;display:none}
+.frac-card .ans.show{display:block;animation:popIn 0.3s cubic-bezier(0.34,1.56,0.64,1)}
+.frac-card .ans-small{font-family:'JetBrains Mono',monospace;font-size:18px;color:var(--text-dim);display:none}
+.frac-card .ans-small.show{display:block;animation:popIn 0.3s 0.1s cubic-bezier(0.34,1.56,0.64,1) both}
+
+/* Highlight vowels */
+.vowel-mark{
+  display:inline-block;background:var(--amber-dim);border-radius:4px;
+  color:var(--amber);padding:0 2px;
+}
+</style>
+</head>
+<body>
+
+<div class="flash-overlay" id="flashOverlay"></div>
+
+<!-- HEADER -->
+<header class="app-header">
+  <div class="app-logo">
+    EXAM HUB
+    <span>UP POLICE 2026</span>
+  </div>
+  <div class="header-score">
+    <div class="score-num" id="totalXP">0</div>
+    <div class="score-label">Total XP</div>
+  </div>
+</header>
+
+<!-- MAIN CONTENT -->
+<div class="main-content" id="mainContent">
+
+  <!-- ════════════════ SECTION 1: CODING ════════════════ -->
+  <div class="section active" id="sec-coding">
+    <div class="sub-nav">
+      <button class="sub-btn active" onclick="showSub('coding','learn',this)">📖 Learn</button>
+      <button class="sub-btn" onclick="showSub('coding','flash',this)">🃏 Cards</button>
+      <button class="sub-btn" onclick="showSub('coding','game',this)">🎮 Game</button>
+    </div>
+
+    <!-- LEARN -->
+    <div class="sub-section active" id="coding-learn">
+      <div class="sec-title">Alphabet Coding</div>
+      <div class="sec-subtitle">A=1 to Z=26 — Position, Opposite, Reverse</div>
+
+      <div class="info-cards">
+        <div class="info-card">
+          <div class="info-card-title">🔑 EJOTY Trick</div>
+          <div class="ejoty-row" id="ejoty"></div>
+          <div style="margin-top:8px;font-size:11px;color:var(--text-dim)">Every 5th letter — memorize these anchor points!</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-title">🔵 Vowel Positions</div>
+          <div class="ejoty-row" id="vowels"></div>
+          <div style="margin-top:8px;font-size:11px;color:var(--text-dim)">A=1, E=5, I=9, O=15, U=21</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-title">📐 Opposite Rule</div>
+          <div class="info-card-content">
+            <span class="cyan">Letter + Opposite = 27</span><br>
+            A(1) ↔ Z(26) = 27<br>
+            B(2) ↔ Y(25) = 27<br>
+            M(13) ↔ N(14) = 27
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-title">🔄 Reverse Position</div>
+          <div class="info-card-content">
+            <span class="green">Rev = 27 − Position</span><br>
+            A=26 from end<br>
+            Z=1 from end<br>
+            M=13, N=14 from end
+          </div>
+        </div>
+      </div>
+
+      <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);font-weight:700;margin-bottom:8px">
+        Full Reference Table — Tap any cell to highlight
+      </div>
+      <div style="display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap;font-size:11px">
+        <span style="color:var(--cyan)">■ Pos</span>
+        <span style="color:var(--amber)">■ Opp</span>
+        <span style="color:var(--green)">■ Rev</span>
+        <span style="color:var(--text-dim)">■ Opposite letter</span>
+      </div>
+      <div class="alpha-grid" id="alphaGrid"></div>
+    </div>
+
+    <!-- FLASHCARDS -->
+    <div class="sub-section" id="coding-flash">
+      <div class="sec-title">Flashcards</div>
+      <div class="sec-subtitle">Tap card to reveal answer</div>
+      <div class="fc-type-row">
+        <button class="fc-type-btn active" onclick="setFcType('pos',this)">Position</button>
+        <button class="fc-type-btn" onclick="setFcType('letter',this)">Letter</button>
+        <button class="fc-type-btn" onclick="setFcType('opp',this)">Opposite</button>
+        <button class="fc-type-btn" onclick="setFcType('rev',this)">Reverse</button>
+        <button class="fc-type-btn" onclick="setFcType('all',this)">🎲 All Mix</button>
+      </div>
+      <div class="flashcard-wrap">
+        <div class="fc-progress">
+          <span id="fcCurrent">0</span>/<span id="fcTotal">26</span>
+          <div class="fc-bar"><div class="fc-bar-fill" id="fcBarFill" style="width:0%"></div></div>
+          <span id="fcKnow" style="color:var(--green)">✓ 0</span>
+        </div>
+        <div class="flashcard" id="flashcard" onclick="revealCard()">
+          <div class="card-question" id="cardQ">A</div>
+          <div class="card-hint" id="cardHint">What is the position?</div>
+          <div class="card-answer" id="cardA">1</div>
+          <div class="card-tap-hint" id="cardTapHint">TAP TO REVEAL</div>
+        </div>
+        <div class="fc-controls" id="fcControls" style="display:none">
+          <button class="fc-btn unsure" onclick="nextCard(false)">✗ Again</button>
+          <button class="fc-btn know" onclick="nextCard(true)">✓ Got It!</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAME -->
+    <div class="sub-section" id="coding-game">
+      <div class="game-select" id="gameSelect">
+        <div class="sec-title">Game Mode</div>
+        <div class="sec-subtitle">Test your knowledge — earn XP!</div>
+        <div class="game-mode-select">
+          <div class="mode-card easy" onclick="startGame('easy')">
+            <div class="mode-icon">🟢</div>
+            <div>
+              <div class="mode-name">Easy Mode</div>
+              <div class="mode-desc">Letter ↔ Position only • No timer • 10 questions</div>
+            </div>
+            <div class="mode-badge easy">+10 XP</div>
+          </div>
+          <div class="mode-card medium" onclick="startGame('medium')">
+            <div class="mode-icon">🟡</div>
+            <div>
+              <div class="mode-name">Medium Mode</div>
+              <div class="mode-desc">+ Opposite & Reverse • 15 sec timer • 15 Qs</div>
+            </div>
+            <div class="mode-badge medium">+25 XP</div>
+          </div>
+          <div class="mode-card hard" onclick="startGame('hard')">
+            <div class="mode-icon">🔴</div>
+            <div>
+              <div class="mode-name">Hard Mode</div>
+              <div class="mode-desc">All types • 8 sec timer • 20 Qs • Streak bonus</div>
+            </div>
+            <div class="mode-badge hard">+50 XP</div>
+          </div>
+        </div>
+        <div style="margin-top:10px;background:var(--bg3);border-radius:10px;padding:12px 14px">
+          <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);font-weight:700;margin-bottom:8px">Your Best Scores</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px" id="bestScores"></div>
+        </div>
+      </div>
+
+      <div class="game-area" id="gameArea">
+        <div class="game-hud">
+          <div class="hud-item">
+            <div class="hud-val" id="hudQ">1/10</div>
+            <div class="hud-label">Question</div>
+          </div>
+          <div class="hud-item">
+            <div class="hud-val" id="hudScore">0</div>
+            <div class="hud-label">Score</div>
+          </div>
+          <div class="hud-item">
+            <div class="hud-val" id="hudStreak">🔥0</div>
+            <div class="hud-label">Streak</div>
+          </div>
+          <div class="hud-item">
+            <div class="hud-val" id="hudTimer">--</div>
+            <div class="hud-label">Secs</div>
+          </div>
+        </div>
+        <div class="timer-bar" id="timerBarWrap"><div class="timer-fill" id="timerFill"></div></div>
+        <div class="streak-bar" id="streakBar"></div>
+        <div class="question-card" id="questionCard">
+          <div class="q-type-badge pos" id="qTypeBadge">Position</div>
+          <div class="question-text" id="questionText">What is the position of A?</div>
+          <div class="question-sub" id="questionSub"></div>
+        </div>
+        <div class="options-grid" id="optionsGrid"></div>
+      </div>
+
+      <div class="game-result" id="gameResult">
+        <div class="result-emoji" id="resultEmoji">🏆</div>
+        <div class="result-title" id="resultTitle">EXCELLENT!</div>
+        <div class="result-score" id="resultScore">Score: 100</div>
+        <div class="result-stats" id="resultStats"></div>
+        <button class="play-again-btn" onclick="playAgain()">▶ PLAY AGAIN</button>
+        <button class="back-btn" onclick="backToSelect()">← Change Mode</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════ SECTION 2: FRACTIONS ════════════════ -->
+  <div class="section" id="sec-fractions">
+    <div class="sub-nav">
+      <button class="sub-btn amber active" onclick="showSub('frac','table',this)">📊 Table</button>
+      <button class="sub-btn amber" onclick="showSub('frac','fflash',this)">🃏 Cards</button>
+      <button class="sub-btn amber" onclick="showSub('frac','fquiz',this)">🎯 Quiz</button>
+    </div>
+
+    <div class="sub-section active" id="frac-table">
+      <div class="sec-title">Fraction → Percent</div>
+      <div class="sec-subtitle">Memorize these for fast calculation in exam</div>
+      <div class="frac-categories" id="fracCats"></div>
+      <table class="frac-table" id="fracTableEl">
+        <thead><tr>
+          <th>Fraction</th><th>Percentage</th><th>Decimal</th><th>Trick to Remember</th>
+        </tr></thead>
+        <tbody id="fracTbody"></tbody>
+      </table>
+    </div>
+
+    <div class="sub-section" id="frac-fflash">
+      <div class="sec-title">Fraction Cards</div>
+      <div class="sec-subtitle">Tap to reveal percentage</div>
+      <div class="fc-progress" style="margin-bottom:12px">
+        <span id="ffCurrent">0</span>/<span id="ffTotal">0</span>
+        <div class="fc-bar"><div class="fc-bar-fill" style="background:var(--amber)" id="ffBarFill"></div></div>
+        <span id="ffKnow" style="color:var(--green)">✓ 0</span>
+      </div>
+      <div class="frac-card" id="fracCard" onclick="revealFracCard()">
+        <div class="q" id="fracCardQ">1/2</div>
+        <div class="hint" id="fracCardHint">What is this as a percentage?</div>
+        <div class="ans" id="fracCardA">50%</div>
+        <div class="ans-small" id="fracCardA2">= 0.5</div>
+      </div>
+      <div class="fc-controls" id="ffControls" style="display:none">
+        <button class="fc-btn unsure" onclick="nextFracCard(false)">✗ Again</button>
+        <button class="fc-btn know" onclick="nextFracCard(true)">✓ Got It!</button>
+      </div>
+    </div>
+
+    <div class="sub-section" id="frac-fquiz">
+      <div class="sec-title">Fraction Quiz</div>
+      <div class="sec-subtitle">4 options — pick the correct percentage</div>
+      <div class="game-hud" style="margin-bottom:12px">
+        <div class="hud-item"><div class="hud-val" id="fqQ">1</div><div class="hud-label">Q</div></div>
+        <div class="hud-item"><div class="hud-val" id="fqScore">0</div><div class="hud-label">Score</div></div>
+        <div class="hud-item"><div class="hud-val" id="fqStreak">🔥0</div><div class="hud-label">Streak</div></div>
+      </div>
+      <div class="frac-quiz-card" id="fracQuizCard">
+        <div class="fq-q" id="fqQ2">1/2</div>
+        <div class="fq-sub">= ______ %</div>
+      </div>
+      <div class="options-grid" id="fqOptions"></div>
+      <div class="game-result" id="fqResult" style="display:none">
+        <div class="result-emoji">🎉</div>
+        <div class="result-title" id="fqResultTitle">DONE!</div>
+        <div class="result-score" id="fqResultScore">Score: 0/10</div>
+        <button class="play-again-btn" style="margin-top:16px;background:linear-gradient(135deg,var(--amber),#c87b00);color:#000" onclick="startFracQuiz()">▶ PLAY AGAIN</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════ SECTION 3: HINDI NOTES ════════════════ -->
+  <div class="section" id="sec-hindi">
+    <div class="sub-nav">
+      <button class="sub-btn green active" onclick="showSub('hindi','add',this)">➕ Add Note</button>
+      <button class="sub-btn green" onclick="showSub('hindi','view',this)">📚 My Notes</button>
+    </div>
+
+    <div class="sub-section active" id="hindi-add">
+      <div class="sec-title">Hindi Grammar</div>
+      <div class="sec-subtitle">Add your notes by topic — they are saved forever</div>
+      <div class="notes-add-form">
+        <label class="form-label">Topic / Rule Name</label>
+        <input type="text" class="form-input" id="noteTopicInput" placeholder="e.g. संधि के प्रकार, विलोम शब्द...">
+        <label class="form-label">Category</label>
+        <input type="text" class="form-input" id="noteCatInput" placeholder="e.g. व्याकरण, मुहावरे, वर्तनी...">
+        <label class="form-label">Your Notes</label>
+        <textarea class="form-textarea" id="noteBodyInput" placeholder="अपने नोट्स यहाँ लिखें...&#10;&#10;Use any language — Hindi, English or both!"></textarea>
+        <button class="add-note-btn" onclick="addNote()">+ Save Note</button>
+      </div>
+
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:14px">
+        <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--green);font-weight:700;margin-bottom:10px">💡 Quick Reference Topics</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px" id="quickTopics"></div>
+      </div>
+    </div>
+
+    <div class="sub-section" id="hindi-view">
+      <div class="sec-title">My Notes</div>
+      <div class="sec-subtitle" id="notesCount">0 notes saved</div>
+      <div class="notes-filter" id="notesFilter"></div>
+      <div class="notes-list" id="notesList"></div>
+    </div>
+  </div>
+
+</div><!-- end main-content -->
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <button class="nav-btn active" onclick="showSection('coding',this)">
+    <span class="nav-icon">🔤</span>Coding
+  </button>
+  <button class="nav-btn amber" onclick="showSection('fractions',this)">
+    <span class="nav-icon">🔢</span>Fractions
+  </button>
+  <button class="nav-btn green" onclick="showSection('hindi',this)">
+    <span class="nav-icon">📝</span>Hindi
+  </button>
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════════════════
+//  DATA
+// ══════════════════════════════════════════════════════════
+const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+const VOWELS = new Set(['A','E','I','O','U']);
+
+function pos(l){ return ALPHABET.indexOf(l)+1 }
+function opp(l){ return ALPHABET[26-ALPHABET.indexOf(l)-1] }
+function rev(l){ return 27-pos(l) }
+
+const FRACTIONS = [
+  // halves
+  { cat:'Halves', frac:'1/2', pct:'50%', dec:'0.5', trick:'Half of 100' },
+  // thirds
+  { cat:'Thirds', frac:'1/3', pct:'33.33%', dec:'0.333', trick:'100÷3=33.33' },
+  { cat:'Thirds', frac:'2/3', pct:'66.67%', dec:'0.667', trick:'2×33.33' },
+  // fourths
+  { cat:'Fourths', frac:'1/4', pct:'25%', dec:'0.25', trick:'Half of 50' },
+  { cat:'Fourths', frac:'3/4', pct:'75%', dec:'0.75', trick:'100−25=75' },
+  // fifths
+  { cat:'Fifths', frac:'1/5', pct:'20%', dec:'0.2', trick:'100÷5=20' },
+  { cat:'Fifths', frac:'2/5', pct:'40%', dec:'0.4', trick:'2×20=40' },
+  { cat:'Fifths', frac:'3/5', pct:'60%', dec:'0.6', trick:'3×20=60' },
+  { cat:'Fifths', frac:'4/5', pct:'80%', dec:'0.8', trick:'100−20=80' },
+  // sixths
+  { cat:'Sixths', frac:'1/6', pct:'16.67%', dec:'0.167', trick:'100÷6≈16.67' },
+  { cat:'Sixths', frac:'5/6', pct:'83.33%', dec:'0.833', trick:'100−16.67' },
+  // sevenths
+  { cat:'Sevenths', frac:'1/7', pct:'14.28%', dec:'0.143', trick:'100÷7≈14.28' },
+  { cat:'Sevenths', frac:'2/7', pct:'28.57%', dec:'0.286', trick:'2×14.28' },
+  { cat:'Sevenths', frac:'3/7', pct:'42.85%', dec:'0.429', trick:'3×14.28' },
+  // eighths
+  { cat:'Eighths', frac:'1/8', pct:'12.5%', dec:'0.125', trick:'Half of 25' },
+  { cat:'Eighths', frac:'3/8', pct:'37.5%', dec:'0.375', trick:'3×12.5' },
+  { cat:'Eighths', frac:'5/8', pct:'62.5%', dec:'0.625', trick:'5×12.5' },
+  { cat:'Eighths', frac:'7/8', pct:'87.5%', dec:'0.875', trick:'100−12.5' },
+  // ninths
+  { cat:'Ninths', frac:'1/9', pct:'11.11%', dec:'0.111', trick:'100÷9≈11.11' },
+  { cat:'Ninths', frac:'2/9', pct:'22.22%', dec:'0.222', trick:'2×11.11' },
+  // tenths
+  { cat:'Tenths', frac:'1/10', pct:'10%', dec:'0.1', trick:'Remove a zero!' },
+  { cat:'Tenths', frac:'3/10', pct:'30%', dec:'0.3', trick:'3×10=30' },
+  { cat:'Tenths', frac:'7/10', pct:'70%', dec:'0.7', trick:'7×10=70' },
+  { cat:'Tenths', frac:'9/10', pct:'90%', dec:'0.9', trick:'100−10=90' },
+  // elevenths
+  { cat:'Elevenths', frac:'1/11', pct:'9.09%', dec:'0.0909', trick:'100÷11≈9.09' },
+  { cat:'Elevenths', frac:'2/11', pct:'18.18%', dec:'0.1818', trick:'2×9.09' },
+  // twelfths
+  { cat:'Twelfths', frac:'1/12', pct:'8.33%', dec:'0.0833', trick:'100÷12≈8.33' },
+  { cat:'Twelfths', frac:'5/12', pct:'41.67%', dec:'0.417', trick:'5×8.33' },
+];
+
+const QUICK_TOPICS = [
+  'संधि के प्रकार','समास के भेद','विलोम शब्द','पर्यायवाची','मुहावरे',
+  'लोकोक्तियाँ','वाक्य अशुद्धि','तत्सम-तद्भव','लिंग परिवर्तन','वचन',
+  'कारक चिह्न','काल के भेद','अलंकार','रस के प्रकार','छंद',
+  'उपसर्ग','प्रत्यय','वर्तनी नियम'
+];
+
+// ══════════════════════════════════════════════════════════
+//  STORAGE
+// ══════════════════════════════════════════════════════════
+function save(key,val){ try{localStorage.setItem('examhub_'+key,JSON.stringify(val))}catch(e){} }
+function load(key,def){ try{const v=localStorage.getItem('examhub_'+key);return v?JSON.parse(v):def}catch(e){return def} }
+
+let totalXP = load('xp',0);
+let bestScores = load('best',{easy:0,medium:0,hard:0});
+let notes = load('notes',[]);
+
+function saveAll(){
+  save('xp',totalXP);
+  save('best',bestScores);
+  save('notes',notes);
+}
+
+function updateXPDisplay(){ document.getElementById('totalXP').textContent=totalXP }
+
+// ══════════════════════════════════════════════════════════
+//  NAVIGATION
+// ══════════════════════════════════════════════════════════
+function showSection(name, btn) {
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('sec-'+name).classList.add('active');
+  btn.classList.add('active');
+  document.getElementById('mainContent').scrollTop = 0;
+  if(name==='hindi') renderNotes();
+}
+
+function showSub(section, sub, btn) {
+  const prefix = section==='coding'?'coding':section==='frac'?'frac':'hindi';
+  const parentSec = section==='coding'?'sec-coding':section==='frac'?'sec-fractions':'sec-hindi';
+  document.querySelectorAll('#'+parentSec+' .sub-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('#'+parentSec+' .sub-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(prefix+'-'+sub).classList.add('active');
+  btn.classList.add('active');
+  document.getElementById('mainContent').scrollTop = 0;
+  if(sub==='fflash') initFracFlash();
+  if(sub==='fquiz') startFracQuiz();
+  if(sub==='view') renderNotes();
+}
+
+// ══════════════════════════════════════════════════════════
+//  BUILD ALPHABET TABLE
+// ══════════════════════════════════════════════════════════
+function buildAlphaGrid(){
+  const grid = document.getElementById('alphaGrid');
+  ALPHABET.forEach(l => {
+    const p = pos(l), o = opp(l), r = rev(l);
+    const isVowel = VOWELS.has(l);
+    const cell = document.createElement('div');
+    cell.className = 'alpha-cell';
+    if(isVowel) cell.style.borderColor = 'rgba(245,166,35,0.4)';
+    cell.innerHTML = `
+      <div class="alpha-letter" style="${isVowel?'color:var(--amber)':''}">${l}</div>
+      <div class="alpha-pos">${p}</div>
+      <div class="alpha-opp">↔${o}</div>
+      <div class="alpha-rev">↩${r}</div>
+    `;
+    cell.onclick = ()=>{
+      document.querySelectorAll('.alpha-cell').forEach(c=>c.style.background='');
+      cell.style.background='rgba(0,212,255,0.1)';
+      cell.style.borderColor='var(--cyan)';
+    };
+    grid.appendChild(cell);
+  });
+
+  // EJOTY
+  const ejoty = document.getElementById('ejoty');
+  ['E','J','O','T','Y'].forEach(l=>{
+    const chip=document.createElement('div');
+    chip.className='ejoty-chip';
+    chip.textContent=`${l}=${pos(l)}`;
+    ejoty.appendChild(chip);
+  });
+
+  // Vowels
+  const vEl = document.getElementById('vowels');
+  ['A','E','I','O','U'].forEach(l=>{
+    const chip=document.createElement('div');
+    chip.className='ejoty-chip';
+    chip.style.cssText='background:rgba(245,166,35,0.1);border-color:rgba(245,166,35,0.3);color:var(--amber)';
+    chip.textContent=`${l}=${pos(l)}`;
+    vEl.appendChild(chip);
+  });
+}
+
+// ══════════════════════════════════════════════════════════
+//  FLASHCARD SYSTEM (Coding)
+// ══════════════════════════════════════════════════════════
+let fcType='pos', fcDeck=[], fcIdx=0, fcKnown=0, fcRevealed=false;
+
+const FC_TYPES = {
+  pos:   {q:l=>`${l}`,     hint:'What is the position? (A=1...Z=26)', a:l=>`${pos(l)}`},
+  letter:{q:l=>`${pos(l)}`,hint:'Which letter is at this position?',   a:l=>`${l}`},
+  opp:   {q:l=>`${l}`,     hint:'What is the OPPOSITE letter? (sum=27)',a:l=>`${opp(l)}`},
+  rev:   {q:l=>`${l}`,     hint:'What is the REVERSE position? (27−pos)',a:l=>`${rev(l)}`},
+};
+
+function setFcType(type, btn){
+  fcType=type;
+  document.querySelectorAll('.fc-type-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  initFlashcards();
+}
+
+function initFlashcards(){
+  fcDeck=[...ALPHABET].sort(()=>Math.random()-0.5);
+  fcIdx=0; fcKnown=0; fcRevealed=false;
+  updateFcUI();
+  document.getElementById('fcControls').style.display='none';
+  document.getElementById('cardA').classList.remove('show');
+  document.getElementById('cardTapHint').style.display='block';
+}
+
+function updateFcUI(){
+  if(fcIdx>=fcDeck.length){ showFcDone(); return; }
+  const l=fcDeck[fcIdx];
+  const types=fcType==='all'?['pos','letter','opp','rev']:null;
+  const t=fcType==='all'?types[fcIdx%4]:fcType;
+  const cfg=FC_TYPES[t]||FC_TYPES.pos;
+  document.getElementById('cardQ').textContent=cfg.q(l);
+  document.getElementById('cardHint').textContent=cfg.hint;
+  document.getElementById('cardA').textContent=cfg.a(l);
+  document.getElementById('cardA').classList.remove('show');
+  document.getElementById('cardTapHint').style.display='block';
+  document.getElementById('fcControls').style.display='none';
+  document.getElementById('fcCurrent').textContent=fcIdx+1;
+  document.getElementById('fcTotal').textContent=fcDeck.length;
+  document.getElementById('fcKnow').textContent='✓ '+fcKnown;
+  document.getElementById('fcBarFill').style.width=((fcIdx/fcDeck.length)*100)+'%';
+  fcRevealed=false;
+}
+
+function revealCard(){
+  if(fcRevealed) return;
+  fcRevealed=true;
+  document.getElementById('cardA').classList.add('show');
+  document.getElementById('cardTapHint').style.display='none';
+  document.getElementById('fcControls').style.display='flex';
+}
+
+function nextCard(knew){
+  if(knew) fcKnown++;
+  fcIdx++;
+  updateFcUI();
+}
+
+function showFcDone(){
+  document.getElementById('cardQ').textContent='✓';
+  document.getElementById('cardHint').textContent=`Done! ${fcKnown}/${fcDeck.length} known`;
+  document.getElementById('cardTapHint').textContent='TAP TO RESTART';
+  document.getElementById('cardTapHint').style.display='block';
+  document.getElementById('fcControls').style.display='none';
+  const fc=document.getElementById('flashcard');
+  fc.onclick=()=>{ fc.onclick=()=>revealCard(); initFlashcards(); };
+  addXP(fcKnown*2);
+  showToast('✅ Deck done! +'+fcKnown*2+' XP');
+}
+
+// ══════════════════════════════════════════════════════════
+//  CODING GAME ENGINE
+// ══════════════════════════════════════════════════════════
+const GAME_CONFIG = {
+  easy:   {qs:10, timer:0,  types:['pos','letter'],           xpMult:10},
+  medium: {qs:15, timer:15, types:['pos','letter','opp','rev'], xpMult:25},
+  hard:   {qs:20, timer:8,  types:['pos','letter','opp','rev'], xpMult:50},
+};
+
+let gMode, gConfig, gQs=[], gIdx=0, gScore=0, gStreak=0, gCorrect=0, gTimer=null, gTimeLeft=0;
+
+function startGame(mode){
+  gMode=mode; gConfig=GAME_CONFIG[mode];
+  gQs=generateQuestions(mode); gIdx=0; gScore=0; gStreak=0; gCorrect=0;
+  document.getElementById('gameSelect').classList.add('hidden');
+  document.getElementById('gameArea').classList.add('active');
+  document.getElementById('gameResult').style.display='none';
+  document.getElementById('gameResult').classList.remove('show');
+  buildStreakBar();
+  updateBestScores();
+  nextQuestion();
+}
+
+function generateQuestions(mode){
+  const cfg=GAME_CONFIG[mode];
+  const qs=[];
+  for(let i=0;i<cfg.qs;i++){
+    const type=cfg.types[Math.floor(Math.random()*cfg.types.length)];
+    const l=ALPHABET[Math.floor(Math.random()*26)];
+    qs.push(makeQuestion(type,l));
+  }
+  return qs;
+}
+
+function makeQuestion(type,l){
+  let q,sub='',correct,wrongPool=[];
+  switch(type){
+    case 'pos':
+      q=`Position of  ${l}?`; correct=pos(l);
+      wrongPool=Array.from({length:26},(_,i)=>i+1).filter(x=>x!==correct);
+      break;
+    case 'letter':
+      q=`Letter at  Position ${pos(l)}?`; correct=l;
+      wrongPool=ALPHABET.filter(x=>x!==l);
+      break;
+    case 'opp':
+      q=`Opposite of  ${l}?`; sub='(A↔Z, sum = 27)'; correct=opp(l);
+      wrongPool=ALPHABET.filter(x=>x!==l&&x!==opp(l));
+      break;
+    case 'rev':
+      q=`Reverse position  of ${l}?`; sub='(27 − forward position)'; correct=rev(l);
+      wrongPool=Array.from({length:26},(_,i)=>i+1).filter(x=>x!==correct);
+      break;
+  }
+  const wrongs=wrongPool.sort(()=>Math.random()-0.5).slice(0,3);
+  const opts=[correct,...wrongs].sort(()=>Math.random()-0.5);
+  const badge={pos:'Position',letter:'Letter',opp:'Opposite',rev:'Reverse'}[type];
+  return {type,q,sub,correct:String(correct),opts:opts.map(String),badge,badgeClass:type};
+}
+
+function nextQuestion(){
+  if(gIdx>=gQs.length){ endGame(); return; }
+  const q=gQs[gIdx];
+  document.getElementById('hudQ').textContent=`${gIdx+1}/${gQs.length}`;
+  document.getElementById('hudScore').textContent=gScore;
+  document.getElementById('hudStreak').textContent='🔥'+gStreak;
+  document.getElementById('qTypeBadge').textContent=q.badge;
+  document.getElementById('qTypeBadge').className='q-type-badge '+q.badgeClass;
+  document.getElementById('questionText').textContent=q.q;
+  document.getElementById('questionSub').textContent=q.sub||'';
+
+  const og=document.getElementById('optionsGrid');
+  og.innerHTML='';
+  q.opts.forEach(opt=>{
+    const btn=document.createElement('button');
+    btn.className='option-btn';
+    btn.textContent=opt;
+    btn.onclick=()=>answerQ(opt,q.correct,btn);
+    og.appendChild(btn);
+  });
+
+  if(gConfig.timer>0){
+    startTimer();
+    document.getElementById('timerBarWrap').style.display='block';
+  } else {
+    document.getElementById('timerBarWrap').style.display='none';
+    document.getElementById('hudTimer').textContent='∞';
+  }
+}
+
+function startTimer(){
+  clearInterval(gTimer);
+  gTimeLeft=gConfig.timer;
+  updateTimerUI();
+  gTimer=setInterval(()=>{
+    gTimeLeft--;
+    updateTimerUI();
+    if(gTimeLeft<=0){
+      clearInterval(gTimer);
+      answerQ(null, gQs[gIdx].correct, null); // timeout
+    }
+  },1000);
+}
+
+function updateTimerUI(){
+  const pct=(gTimeLeft/gConfig.timer)*100;
+  const fill=document.getElementById('timerFill');
+  fill.style.width=pct+'%';
+  fill.className='timer-fill'+(pct<40?' warn':'')+(pct<20?' danger':'');
+  document.getElementById('hudTimer').textContent=gTimeLeft;
+}
+
+function answerQ(selected, correct, btn){
+  clearInterval(gTimer);
+  const isCorrect = selected===correct;
+  document.querySelectorAll('.option-btn').forEach(b=>{
+    b.disabled=true;
+    if(b.textContent===correct) b.classList.add('correct');
+  });
+  if(btn && !isCorrect) btn.classList.add('wrong');
+
+  flash(isCorrect);
+
+  if(isCorrect){
+    gStreak++; gCorrect++;
+    const bonus=gMode==='hard'?Math.floor(gStreak/3):0;
+    gScore+=10+bonus;
+  } else {
+    gStreak=0;
+  }
+  updateStreakBar();
+
+  gIdx++;
+  setTimeout(nextQuestion,900);
+}
+
+function flash(ok){
+  const el=document.getElementById('flashOverlay');
+  el.className='flash-overlay '+(ok?'correct':'wrong')+' show';
+  setTimeout(()=>el.classList.remove('show'),300);
+}
+
+function buildStreakBar(){
+  const bar=document.getElementById('streakBar');
+  bar.innerHTML='';
+  for(let i=0;i<5;i++){
+    const d=document.createElement('div');
+    d.className='streak-dot';
+    d.id='sd_'+i;
+    bar.appendChild(d);
+  }
+}
+function updateStreakBar(){
+  for(let i=0;i<5;i++){
+    const d=document.getElementById('sd_'+i);
+    if(d) d.className='streak-dot'+(gStreak>i?' lit':'');
+  }
+}
+
+function endGame(){
+  clearInterval(gTimer);
+  const xpEarned=Math.floor((gCorrect/gQs.length)*gConfig.xpMult+gScore);
+  addXP(xpEarned);
+  if(gScore>bestScores[gMode]){ bestScores[gMode]=gScore; saveAll(); }
+
+  const pct=Math.floor((gCorrect/gQs.length)*100);
+  const emojis={0:'😓',40:'😐',60:'🙂',80:'😃',100:'🏆'};
+  const emoji=Object.entries(emojis).reverse().find(([k])=>pct>=+k)[1];
+  const titles={0:'KEEP TRYING',40:'NOT BAD',60:'GOOD JOB',80:'EXCELLENT',100:'PERFECT!'};
+  const title=Object.entries(titles).reverse().find(([k])=>pct>=+k)[1];
+
+  document.getElementById('resultEmoji').textContent=emoji;
+  document.getElementById('resultTitle').textContent=title;
+  document.getElementById('resultScore').textContent=`Score: ${gScore} | +${xpEarned} XP`;
+  document.getElementById('resultStats').innerHTML=`
+    <div class="rs-item"><div class="rs-val" style="color:var(--green)">${gCorrect}</div><div class="rs-label">Correct</div></div>
+    <div class="rs-item"><div class="rs-val" style="color:var(--red)">${gQs.length-gCorrect}</div><div class="rs-label">Wrong</div></div>
+    <div class="rs-item"><div class="rs-val" style="color:var(--gold)">${pct}%</div><div class="rs-label">Accuracy</div></div>
+  `;
+  document.getElementById('gameArea').classList.remove('active');
+  const res=document.getElementById('gameResult');
+  res.style.display='block';
+  setTimeout(()=>res.classList.add('show'),50);
+}
+
+function playAgain(){ startGame(gMode); }
+function backToSelect(){
+  document.getElementById('gameArea').classList.remove('active');
+  document.getElementById('gameResult').style.display='none';
+  document.getElementById('gameResult').classList.remove('show');
+  document.getElementById('gameSelect').classList.remove('hidden');
+  updateBestScores();
+}
+
+function updateBestScores(){
+  document.getElementById('bestScores').innerHTML=
+    ['easy','medium','hard'].map(m=>`
+      <div style="text-align:center;background:var(--bg4);border-radius:8px;padding:8px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:700;color:var(--text-bright)">${bestScores[m]||0}</div>
+        <div style="font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase">${m}</div>
+      </div>`).join('');
+}
+
+// ══════════════════════════════════════════════════════════
+//  FRACTION TABLE
+// ══════════════════════════════════════════════════════════
+let fracCatFilter='All';
+
+function buildFracTable(){
+  const cats=['All',...new Set(FRACTIONS.map(f=>f.cat))];
+  const catEl=document.getElementById('fracCats');
+  cats.forEach(c=>{
+    const btn=document.createElement('button');
+    btn.className='frac-cat-btn'+(c==='All'?' active':'');
+    btn.textContent=c;
+    btn.onclick=()=>{
+      fracCatFilter=c;
+      document.querySelectorAll('.frac-cat-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      renderFracTable();
+    };
+    catEl.appendChild(btn);
+  });
+  renderFracTable();
+}
+
+function renderFracTable(){
+  const tbody=document.getElementById('fracTbody');
+  tbody.innerHTML='';
+  const rows=fracCatFilter==='All'?FRACTIONS:FRACTIONS.filter(f=>f.cat===fracCatFilter);
+  rows.forEach(f=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
+      <td><span class="frac-num">${f.frac}</span></td>
+      <td><span class="frac-pct">${f.pct}</span></td>
+      <td><span class="frac-dec">${f.dec}</span></td>
+      <td><span class="frac-trick">${f.trick}</span></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+// ══════════════════════════════════════════════════════════
+//  FRACTION FLASHCARDS
+// ══════════════════════════════════════════════════════════
+let ffDeck=[], ffIdx=0, ffKnown=0, ffRevealed=false;
+
+function initFracFlash(){
+  ffDeck=[...FRACTIONS].sort(()=>Math.random()-0.5);
+  ffIdx=0; ffKnown=0; ffRevealed=false;
+  renderFracCard();
+  document.getElementById('ffControls').style.display='none';
+}
+
+function renderFracCard(){
+  if(ffIdx>=ffDeck.length){ fracFlashDone(); return; }
+  const f=ffDeck[ffIdx];
+  document.getElementById('fracCardQ').textContent=f.frac;
+  document.getElementById('fracCardA').textContent=f.pct;
+  document.getElementById('fracCardA').classList.remove('show');
+  document.getElementById('fracCardA2').textContent='= '+f.dec+' ('+f.trick+')';
+  document.getElementById('fracCardA2').classList.remove('show');
+  document.getElementById('ffCurrent').textContent=ffIdx+1;
+  document.getElementById('ffTotal').textContent=ffDeck.length;
+  document.getElementById('ffKnow').textContent='✓ '+ffKnown;
+  document.getElementById('ffBarFill').style.width=((ffIdx/ffDeck.length)*100)+'%';
+  document.getElementById('fracCardHint').textContent='What is this as a percentage?';
+  ffRevealed=false;
+  document.getElementById('ffControls').style.display='none';
+}
+
+function revealFracCard(){
+  if(ffRevealed) return;
+  ffRevealed=true;
+  document.getElementById('fracCardA').classList.add('show');
+  document.getElementById('fracCardA2').classList.add('show');
+  document.getElementById('fracCardHint').textContent='';
+  document.getElementById('ffControls').style.display='flex';
+}
+
+function nextFracCard(knew){
+  if(knew) ffKnown++;
+  ffIdx++;
+  renderFracCard();
+}
+
+function fracFlashDone(){
+  document.getElementById('fracCardQ').textContent='✓';
+  document.getElementById('fracCardA').textContent='Done!';
+  document.getElementById('fracCardA').classList.add('show');
+  document.getElementById('fracCardHint').textContent=`${ffKnown}/${ffDeck.length} fractions known`;
+  document.getElementById('ffControls').style.display='none';
+  const fc=document.getElementById('fracCard');
+  fc.onclick=()=>{ fc.onclick=()=>revealFracCard(); initFracFlash(); };
+  addXP(ffKnown);
+  showToast('✅ Fractions done! +'+ffKnown+' XP');
+}
+
+// ══════════════════════════════════════════════════════════
+//  FRACTION QUIZ
+// ══════════════════════════════════════════════════════════
+let fqDeck=[], fqIdx=0, fqScore=0, fqStreak=0;
+
+function startFracQuiz(){
+  fqDeck=[...FRACTIONS].sort(()=>Math.random()-0.5).slice(0,15);
+  fqIdx=0; fqScore=0; fqStreak=0;
+  document.getElementById('fqResult').style.display='none';
+  renderFracQ();
+}
+
+function renderFracQ(){
+  if(fqIdx>=fqDeck.length){ endFracQuiz(); return; }
+  const f=fqDeck[fqIdx];
+  document.getElementById('fqQ').textContent=fqIdx+1;
+  document.getElementById('fqScore').textContent=fqScore;
+  document.getElementById('fqStreak').textContent='🔥'+fqStreak;
+  document.getElementById('fqQ2').textContent=f.frac;
+
+  // wrong options
+  const wrongs=FRACTIONS.filter(x=>x.pct!==f.pct).sort(()=>Math.random()-0.5).slice(0,3).map(x=>x.pct);
+  const opts=[f.pct,...wrongs].sort(()=>Math.random()-0.5);
+
+  const og=document.getElementById('fqOptions');
+  og.innerHTML='';
+  opts.forEach(opt=>{
+    const btn=document.createElement('button');
+    btn.className='option-btn';
+    btn.style.fontSize='18px';
+    btn.textContent=opt;
+    btn.onclick=()=>answerFQ(opt,f.pct,btn);
+    og.appendChild(btn);
+  });
+}
+
+function answerFQ(sel,correct,btn){
+  const isCorrect=sel===correct;
+  document.querySelectorAll('#fqOptions .option-btn').forEach(b=>{
+    b.disabled=true;
+    if(b.textContent===correct) b.classList.add('correct');
+  });
+  if(!isCorrect) btn.classList.add('wrong');
+  flash(isCorrect);
+  if(isCorrect){fqStreak++;fqScore+=10+Math.floor(fqStreak/3);}
+  else fqStreak=0;
+  fqIdx++;
+  setTimeout(renderFracQ,800);
+}
+
+function endFracQuiz(){
+  const pct=Math.floor((fqScore/150)*100);
+  document.getElementById('fqResultTitle').textContent=pct>=80?'EXCELLENT! 🔥':pct>=50?'GOOD JOB! 👍':'KEEP REVISING! 📖';
+  document.getElementById('fqResultScore').textContent=`Score: ${fqScore} / ${fqDeck.length*10}`;
+  document.getElementById('fqResult').style.display='block';
+  addXP(fqScore);
+  showToast('Quiz done! +'+fqScore+' XP');
+}
+
+// ══════════════════════════════════════════════════════════
+//  HINDI NOTES
+// ══════════════════════════════════════════════════════════
+let noteFilter='All';
+
+function buildQuickTopics(){
+  const el=document.getElementById('quickTopics');
+  QUICK_TOPICS.forEach(t=>{
+    const chip=document.createElement('div');
+    chip.style.cssText='background:var(--bg4);border:1px solid var(--border2);border-radius:6px;padding:5px 10px;font-size:12px;cursor:pointer;color:var(--text-dim);transition:all 0.2s;font-family:\'Noto Sans Devanagari\',sans-serif';
+    chip.textContent=t;
+    chip.onmouseenter=()=>{chip.style.borderColor='var(--green)';chip.style.color='var(--green)'};
+    chip.onmouseleave=()=>{chip.style.borderColor='var(--border2)';chip.style.color='var(--text-dim)'};
+    chip.onclick=()=>{ document.getElementById('noteTopicInput').value=t; document.getElementById('noteBodyInput').focus(); };
+    el.appendChild(chip);
+  });
+}
+
+function addNote(){
+  const topic=document.getElementById('noteTopicInput').value.trim();
+  const cat=document.getElementById('noteCatInput').value.trim()||'General';
+  const body=document.getElementById('noteBodyInput').value.trim();
+  if(!topic||!body){ showToast('⚠️ Topic and notes are required!'); return; }
+  notes.unshift({
+    id:Date.now(), topic, cat, body,
+    date:new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'})
+  });
+  saveAll();
+  document.getElementById('noteTopicInput').value='';
+  document.getElementById('noteCatInput').value='';
+  document.getElementById('noteBodyInput').value='';
+  showToast('✅ Note saved!');
+  addXP(5);
+}
+
+function renderNotes(){
+  const cats=['All',...new Set(notes.map(n=>n.cat))];
+  const fEl=document.getElementById('notesFilter');
+  fEl.innerHTML='';
+  cats.forEach(c=>{
+    const btn=document.createElement('button');
+    btn.className='notes-filter-btn'+(c===noteFilter?' active':'');
+    btn.textContent=c+(c==='All'?` (${notes.length})`:'');
+    btn.onclick=()=>{ noteFilter=c; renderNotes(); };
+    fEl.appendChild(btn);
+  });
+
+  const filtered=noteFilter==='All'?notes:notes.filter(n=>n.cat===noteFilter);
+  document.getElementById('notesCount').textContent=`${notes.length} notes saved`;
+  const list=document.getElementById('notesList');
+  if(!filtered.length){
+    list.innerHTML=`<div class="empty-notes"><div class="e-icon">📝</div><p>No notes yet. Go to "Add Note" and start writing!</p></div>`;
+    return;
+  }
+  list.innerHTML='';
+  filtered.forEach(n=>{
+    const card=document.createElement('div');
+    card.className='note-card';
+    card.innerHTML=`
+      <div class="note-header" onclick="toggleNote(${n.id},this)">
+        <div>
+          <div class="note-topic">${n.topic} <span class="topic-badge">${n.cat}</span></div>
+          <div class="note-meta">${n.date}</div>
+        </div>
+        <div class="note-actions">
+          <button class="note-del" onclick="event.stopPropagation();deleteNote(${n.id})" title="Delete">🗑</button>
+          <span class="note-chevron" id="chev_${n.id}">▶</span>
+        </div>
+      </div>
+      <div class="note-body" id="nbody_${n.id}">${escapeHTML(n.body)}</div>
+    `;
+    list.appendChild(card);
+  });
+}
+
+function toggleNote(id,headerEl){
+  const body=document.getElementById('nbody_'+id);
+  const chev=document.getElementById('chev_'+id);
+  body.classList.toggle('open');
+  chev.classList.toggle('open');
+}
+
+function deleteNote(id){
+  if(!confirm('Delete this note?')) return;
+  notes=notes.filter(n=>n.id!==id);
+  saveAll();
+  renderNotes();
+  showToast('🗑 Note deleted');
+}
+
+function escapeHTML(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
+
+// ══════════════════════════════════════════════════════════
+//  XP & TOAST
+// ══════════════════════════════════════════════════════════
+function addXP(n){
+  totalXP+=n; saveAll(); updateXPDisplay();
+}
+
+let toastT;
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.classList.add('show');
+  clearTimeout(toastT);
+  toastT=setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+// ══════════════════════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════════════════════
+function init(){
+  updateXPDisplay();
+  buildAlphaGrid();
+  initFlashcards();
+  buildFracTable();
+  buildQuickTopics();
+  updateBestScores();
+  startFracQuiz();
+  renderNotes();
+}
+init();
+</script>
+</body>
+</html>
